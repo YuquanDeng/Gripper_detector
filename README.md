@@ -6,7 +6,7 @@
 ```
 conda create --name gripper_det python=3.8.1
 conda activate gripper_det
-git clone this repo
+git clone https://github.com/Dantong88/Gripper_detector
 ```
 2. install torch
 ```
@@ -43,7 +43,10 @@ put it under the folder ckpt.
 ## inference
 Run inference using our test image:
 
-``` python ./inference.py --ckpt /home/niudt/robotic_project/detectron2/tools/rtx_42subset_gripper_new/model_final.pth```
+```angular2html
+python inference.py --ckpt ckpt/model_final.pth
+```
+
 
 see parser in ```inference.py``` for complete usage.
 
