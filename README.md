@@ -12,37 +12,52 @@ git clone this repo
 ```
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
-3. you maybe need to degrade gcc bulabula:
 
-```
-sudo apt install gcc-9 g++-9 gcc-10 g++-10 gcc-11 g++-11 g++-12 gcc-12 g++-13 gcc-13 g++-14 gcc-14 -y
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 70 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
-```
-
-4. install off-the-shelf detectron2
+3. install off-the-shelf detectron2
 ```
 python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 ```
 
 
+## Model
+We release the weights of the detector as follows, you are free to download it and
+put it under the folder ckpt.
+
+<table><tbody>
+<!-- START TABLE -->
+<!-- TABLE HEADER -->
+<th valign="bottom">Name</th>
+<th valign="bottom">Backbone</th>
+<th valign="bottom">Train Set</th>
+<th valign="bottom">Download</th>
+<!-- TABLE BODY -->
+<!-- ROW: retinanet_R_50_FPN_1x -->
+<tr><td align="left">End-effector Detector</td>
+<td align="center">ResNet101</td>
+<td align="center"><a href="https://robotics-transformer-x.github.io/">Subset of OXE</a></td>
+<td align="center"><a href="https://drive.google.com/file/d/1qQV-yPZHqW9Z_eKR_U0aTnkcKpQ1em9V/view?usp=sharing">Model</a></td>
+</tr>
+</tbody></table>
+
+
 ## inference
-just run:
-``` python ./batch_inference.py```
+Run inference using our test image:
 
-see parser in ```batch_inference.py``` to control if visualize and text_promt and image folder
+``` python ./inference.py --ckpt /home/niudt/robotic_project/detectron2/tools/rtx_42subset_gripper_new/model_final.pth```
 
-## supported objects 
-We now only support:
+see parser in ```inference.py``` for complete usage.
+
+<p align="center"> <img src='assets/det_vis.jpg' align="center" > </p>
+
+## How to get support from us?
+If you have any general questions, feel free to email us at [Dantong Niu](mailto:bias_88@berkeley.edu)). If you have code or implementation-related questions, please feel free to send emails to us or open an issue in this codebase (We recommend that you open an issue in this codebase, because your questions may help others). 
+
+## Citation
+If you find our work inspiring or use our codebase in your research, please consider giving a star ⭐ and a citation.
 ```
-self.supported_objs = {0: {'id': 0, 'name': 'blue cube', 'color': [220, 20, 60], 'isthing': 1},
-                               1: {'id': 1, 'name': 'green cube', 'color': [220, 20, 60], 'isthing': 1},
-                               2: {'id': 2, 'name': 'magenta cube', 'color': [220, 20, 60], 'isthing': 1},
-                               3: {'id': 3, 'name': 'orange cube', 'color': [220, 20, 60], 'isthing': 1},
-                               4: {'id': 4, 'name': 'purple cube', 'color': [220, 20, 60], 'isthing': 1},
-                               5: {'id': 5, 'name': 'red cube', 'color': [220, 20, 60], 'isthing': 1},
-                               6: {'id': 6, 'name': 'yellow cube', 'color': [220, 20, 60], 'isthing': 1}}
+@misc{niu2024llarva,
+      title={LLARVA: Vision-Action Instruction Tuning Enhances Robot Learning}, 
+      author={Dantong Niu and Yuvan Sharma and Giscard Biamby and Jerome Quenum and Yutong Bai and Baifeng Shi and Trevor Darrell and Roei Herzig},
+      year={2024}
+}
 ```
-which means your ```text_prompt``` must be one of them, we can further train a more diverse selector, but the current one should be enough to experiment on "pick cube".
-
-## some demos
-I have run some demos, the results are in ```/scratch/partial_datasets/rlbench/bimanual_data/det_att_pred```

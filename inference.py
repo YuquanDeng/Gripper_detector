@@ -82,18 +82,22 @@ if __name__ == '__main__':
     parser.add_argument('--config_file', type=str,
                         default='config/det_config.yaml')
     parser.add_argument('--ckpt', type=str,
-                        default='/home/niudt/robotic_project/detectron2/tools/rtx_42subset_gripper_new/model_final.pth')
+                        default='')
     parser.add_argument('--device', type=str,
-                        default='cuda')
+                        default='cpu')
     parser.add_argument('--input_img', type=str,
-                        default='/scratch/partial_datasets/rlbench/release_oxe/images/toto/999/92.jpg')
+                        default='assets/berkeley_rpt.jpg')
+    parser.add_argument('--save_path', type=str,
+                        default='assets')
+    parser.add_argument('--conf_thresh', type=float,
+                        default=0.5)
 
     args = parser.parse_args()
 
     cfg = get_cfg()
     cfg.merge_from_file(args.config_file)
     cfg.MODEL.WEIGHTS = args.ckpt  # add model weight here
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # 0.5 , set the testing threshold for this model
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = args.conf_thresh  # 0.5 , set the testing threshold for this model
     predictor = BatchPredictor(cfg).to(args.device)
     supported_objs = {0: {'id': 1, 'name': 'gripper', 'color': [220, 20, 60], 'isthing': 1}}
 
@@ -102,7 +106,9 @@ if __name__ == '__main__':
     visualizer = Visualizer(img_rgb=image_cv2[:, :, ::-1])
     image_cv2 = cv2.imread(args.input_img) # Convert from RGB to BGR to align with the image format in OpenCV
     det_pred = predictor([image_cv2])
-    visualizer.draw_instance_predictions(det_pred)
+    det_results = visualizer.draw_instance_predictions(det_pred[0]['instances'])
 
     # add save_later
+    save_path = os.path.join(args.save_path, 'det_' + os.path.basename(args.input_img))
+    det_results.save(save_path)
 
