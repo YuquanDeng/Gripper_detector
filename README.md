@@ -34,7 +34,7 @@ put it under the folder ckpt.
 <!-- ROW: retinanet_R_50_FPN_1x -->
 <tr><td align="left">End-effector Detector</td>
 <td align="center">ResNet101</td>
-<td align="center"><a href="https://robotics-transformer-x.github.io/">Subset of OXE</a></td>
+<td align="center">Subset of OXE</td>
 <td align="center"><a href="https://drive.google.com/file/d/1qQV-yPZHqW9Z_eKR_U0aTnkcKpQ1em9V/view?usp=sharing">Model</a></td>
 </tr>
 </tbody></table>
