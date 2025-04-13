@@ -111,4 +111,5 @@ if __name__ == '__main__':
     # add save_later
     save_path = os.path.join(args.save_path, 'det_' + os.path.basename(args.input_img))
     det_results.save(save_path)
+    print(f"Detection results saved at {save_path}")
 
